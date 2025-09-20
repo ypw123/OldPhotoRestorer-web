@@ -1,18 +1,28 @@
-import React from 'react';
-import { Download, RotateCcw } from 'lucide-react';
+import * as React from 'react';
+import { Download, RotateCcw, AlertCircle, X } from 'lucide-react';
 
 interface ImagePreviewProps {
   originalImage: string;
   restoredImage?: string;
   isProcessing: boolean;
+  progress?: number;
+  progressText?: string;
+  error?: string | null;
   onReset: () => void;
+  onReprocess: () => void;
+  onClearError?: () => void;
 }
 
 const ImagePreview: React.FC<ImagePreviewProps> = ({
   originalImage,
   restoredImage,
   isProcessing,
-  onReset
+  progress = 0,
+  progressText = '',
+  error = null,
+  onReset,
+  onReprocess,
+  onClearError
 }) => {
   const handleDownload = () => {
     if (restoredImage) {
@@ -27,10 +37,39 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
+      {/* 错误提示 */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <AlertCircle className="h-5 w-5 text-red-500" />
+            <div>
+              <h3 className="text-red-800 font-medium">处理失败</h3>
+              <p className="text-red-600 text-sm">{error}</p>
+            </div>
+          </div>
+          {onClearError && (
+            <button
+              onClick={onClearError}
+              className="p-1 hover:bg-red-100 rounded-lg transition-colors duration-200"
+            >
+              <X className="h-4 w-4 text-red-500" />
+            </button>
+          )}
+        </div>
+      )}
+
       {/* 操作按钮 */}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold text-gray-900">修复结果</h2>
         <div className="flex space-x-3">
+          <button
+            onClick={onReprocess}
+            disabled={isProcessing}
+            className="flex items-center space-x-2 px-4 py-2 text-white bg-gradient-to-r from-green-400 to-green-500 rounded-xl hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 disabled:hover:scale-100"
+          >
+            <RotateCcw className="h-4 w-4" />
+            <span>{isProcessing ? '处理中...' : '重新修复'}</span>
+          </button>
           <button
             onClick={onReset}
             className="flex items-center space-x-2 px-4 py-2 text-gray-600 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors duration-200"
@@ -79,8 +118,18 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
                 <div className="text-center space-y-4">
                   <div className="animate-spin rounded-full h-12 w-12 border-4 border-orange-200 border-t-orange-400 mx-auto"></div>
                   <div className="space-y-2">
-                    <p className="text-gray-600 font-medium">AI正在修复中...</p>
-                    <p className="text-sm text-gray-500">请耐心等待几秒钟</p>
+                    <p className="text-gray-600 font-medium">
+                      {progressText || 'AI正在修复中...'}
+                    </p>
+                    <div className="w-48 bg-gray-200 rounded-full h-2 mx-auto">
+                      <div 
+                        className="bg-gradient-to-r from-orange-400 to-orange-500 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${progress}%` }}
+                      ></div>
+                    </div>
+                    <p className="text-sm text-gray-500">
+                      {progress > 0 ? `${progress}%` : '请耐心等待...'}
+                    </p>
                   </div>
                 </div>
               </div>

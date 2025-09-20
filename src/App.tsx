@@ -1,11 +1,24 @@
-import React from 'react';
 import Header from './components/Header';
 import FileUpload from './components/FileUpload';
 import ImagePreview from './components/ImagePreview';
+import HowItWorks from './components/HowItWorks';
+import Features from './components/Features';
+import Footer from './components/Footer';
 import { usePhotoRestoration } from './hooks/usePhotoRestoration';
 
 function App() {
-  const { originalImage, restoredImage, isProcessing, processPhoto, reset } = usePhotoRestoration();
+  const { 
+    originalImage, 
+    restoredImage, 
+    isProcessing, 
+    progress, 
+    progressText, 
+    error, 
+    processPhoto, 
+    reprocessPhoto, 
+    reset, 
+    clearError 
+  } = usePhotoRestoration();
 
   return (
     <div className="min-h-screen time-travel-bg floating-particles relative">
@@ -35,12 +48,26 @@ function App() {
                 originalImage={originalImage}
                 restoredImage={restoredImage}
                 isProcessing={isProcessing}
+                progress={progress}
+                progressText={progressText}
+                error={error}
                 onReset={reset}
+                onReprocess={reprocessPhoto}
+                onClearError={clearError}
               />
             )}
           </div>
         </section>
+        
+        {/* How It Works Section - 只在没有上传图片时显示 */}
+        {/* {!originalImage && <HowItWorks />} */}
+        
+        {/* Features Section - 只在没有上传图片时显示 */}
+        {/* {!originalImage && <Features />} */}
       </main>
+      
+      {/* Footer - 只在没有上传图片时显示 */}
+      {/* {!originalImage && <Footer />} */}
     </div>
   );
 }

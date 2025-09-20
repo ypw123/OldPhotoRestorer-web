@@ -30,8 +30,6 @@
       radial-gradient(circle at 80% 20%, rgba(255, 177, 153, 0.3) 0%, transparent 50%),
       radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%),
       linear-gradient(135deg, rgba(251, 146, 60, 0.1) 0%, rgba(251, 191, 36, 0.1) 50%, rgba(168, 85, 247, 0.1) 100%);
-    animation: timeWarp 8s ease-in-out infinite;
-    background-size: 400% 400%;
   }
   
   .floating-particles {
@@ -100,24 +98,6 @@
     }
   }
   
-  @keyframes timeWarp {
-    0%, 100% {
-      background-position: 0% 50%;
-      filter: hue-rotate(0deg);
-    }
-    25% {
-      background-position: 100% 50%;
-      filter: hue-rotate(90deg);
-    }
-    50% {
-      background-position: 100% 0%;
-      filter: hue-rotate(180deg);
-    }
-    75% {
-      background-position: 0% 0%;
-      filter: hue-rotate(270deg);
-    }
-  }
   
   @keyframes floatingParticles {
     0% {

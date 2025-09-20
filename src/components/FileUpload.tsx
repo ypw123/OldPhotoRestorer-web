@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Upload, Image as ImageIcon, X } from 'lucide-react';
+import { Upload, Image as ImageIcon } from 'lucide-react';
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
@@ -41,17 +41,15 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect, isProcessing }) =
   return (
     <div className="w-full max-w-2xl mx-auto">
       <div
-        className={`relative border-2 border-dashed rounded-2xl p-8 text-center transition-all duration-300 ${
-          isDragOver
-            ? 'border-orange-400 bg-orange-50 scale-105'
-            : 'border-gray-300 bg-gray-50 hover:border-orange-300 hover:bg-orange-25'
+        className={`relative border-2 border-dashed rounded-2xl p-8 text-center ${
+          isDragOver ? 'border-orange-400 bg-orange-50' : 'border-gray-300 bg-gray-50'
         } ${isProcessing ? 'opacity-50 pointer-events-none' : ''}`}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
       >
         <div className="flex flex-col items-center space-y-4">
-          <div className={`p-4 rounded-full transition-all duration-300 ${
+          <div className={`p-4 rounded-full ${
             isDragOver ? 'bg-orange-400' : 'bg-gray-200'
           }`}>
             {isDragOver ? (
@@ -74,7 +72,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect, isProcessing }) =
           </div>
 
           <button
-            className={`px-6 py-3 bg-gradient-to-r from-orange-400 to-orange-500 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 ${
+            className={`px-6 py-3 bg-gradient-to-r from-orange-400 to-orange-500 text-white font-medium rounded-xl ${
               isProcessing ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             disabled={isProcessing}

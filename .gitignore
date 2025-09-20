@@ -2,7 +2,7 @@
 node_modules/
 
 # 忽略所有文件
-*
+
 
 # 但保留 dist 目录
 !dist/

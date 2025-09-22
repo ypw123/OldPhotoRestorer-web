@@ -1,7 +1,7 @@
 // API 配置
 export const API_CONFIG = {
   // 开发环境后端 URL
-  BASE_URL: 'http://localhost:4000',
+  BASE_URL: 'https://ypw123.dpdns.org',
   
   // API 路径
   ENDPOINTS: {
